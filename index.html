@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>StudySpark</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
       <button class="nav on" data-view="home"><span>🏠</span>Home</button>
       <button class="nav" data-view="cards"><span>🗂️</span>Flashcards</button>
       <button class="nav" data-view="quiz"><span>📝</span>Quiz Maker</button>
+      <button class="nav" data-view="sets"><span>📚</span>Study Sets</button>
       <button class="nav" data-view="tasks"><span>✅</span>Study Checklist</button>
       <button class="nav" data-view="progress"><span>📈</span>My Progress</button>
     </nav>
@@ -30,6 +31,33 @@
         <h1>Ready to make studying a little easier?</h1>
         <p>Your little space to learn, practice, and shine.</p>
       </header>
+      <div class="card snap">
+        <h2>Turn Your Homework Into a Study Set</h2>
+        <p class="muted" id="ai-note" role="status"></p>
+        <div class="btns" style="justify-content:flex-start;margin:0">
+          <button class="btn" id="b-cam" type="button">📷 Take a Photo</button>
+          <button class="btn ghost" id="b-up" type="button">🖼️ Upload a Photo</button>
+          <button class="btn ghost" id="manual-set" type="button">✏️ Create by Hand</button>
+        </div>
+        <input type="file" id="f-cam" accept="image/jpeg,image/png,image/webp" capture="environment" hidden>
+        <input type="file" id="f-up" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" hidden>
+        <p class="muted small">JPG, PNG or WEBP, up to 8 MB. Your photo is sent to the AI to read it. StudySpark does not keep it, only the study set you create.</p>
+        <div id="snap-prev" hidden>
+          <img id="p-img" alt="Preview of your homework photo">
+          <div class="btns" style="justify-content:flex-start"><button class="btn" id="snap-go" type="button">Create My Study Set</button><button class="btn ghost sm" id="b-rep" type="button">Replace photo</button><button class="btn ghost sm" id="b-rm" type="button">Remove photo</button><button class="btn ghost sm" id="snap-stop" type="button" hidden>Stop</button></div>
+        </div>
+        <div class="bar prog" id="snap-prog" hidden><i class="ind"></i></div>
+        <p class="muted small" id="snap-status" role="status"></p>
+        <div id="snap-review" hidden>
+          <p class="muted small" id="r-warn" role="alert"></p>
+          <label>Set title<input id="r-title" maxlength="60"></label>
+          <label>Subject<input id="r-subj" maxlength="40"></label>
+          <label>What the AI read (fix anything that is wrong)<textarea id="r-text" rows="8"></textarea></label>
+          <fieldset><legend>Make</legend><label><input type="checkbox" id="r-cards" checked> Flashcards</label><label><input type="checkbox" id="r-quiz" checked> Practice quiz</label></fieldset>
+          <label>How many of each<select id="r-n"><option>5</option><option selected>8</option><option>10</option></select></label>
+          <button class="btn" id="snap-build" type="button">Build study set</button>
+        </div>
+      </div>
       <div class="grid2">
         <div class="card big">
           <h2>Your study sessions</h2>
@@ -92,6 +120,19 @@
         </form>
         <div class="card" id="quiz-area"></div>
       </div>
+    </section>
+
+    <!-- STUDY SETS -->
+    <section class="view" id="v-sets" hidden>
+      <h1>Study Sets</h1>
+      <div class="card" style="margin-bottom:18px"><label>Search your sets<input id="set-search" type="search" placeholder="Type a title or subject"></label><button class="btn sm" id="new-set" type="button">+ New empty set</button></div>
+      <div class="grid3" id="set-list"></div>
+    </section>
+    <section class="view" id="v-set" hidden>
+      <button class="btn ghost sm" data-view="sets" type="button">← All study sets</button>
+      <div id="set-head" style="margin:14px 0"></div>
+      <div class="btns" style="justify-content:flex-start;margin:0 0 14px"><button class="btn sm" id="tab-c" type="button">Flashcards</button><button class="btn ghost sm" id="tab-q" type="button">Quiz</button></div>
+      <div class="card" id="set-body"></div>
     </section>
 
     <!-- TASKS -->
