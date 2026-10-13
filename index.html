@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudySpark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="side">
+    <div class="logo">✦ StudySpark</div>
+    <nav aria-label="Main">
+      <button class="nav on" data-view="home"><span>🏠</span>Home</button>
+      <button class="nav" data-view="cards"><span>🗂️</span>Flashcards</button>
+      <button class="nav" data-view="quiz"><span>📝</span>Quiz Maker</button>
+      <button class="nav" data-view="tasks"><span>✅</span>Study Checklist</button>
+      <button class="nav" data-view="progress"><span>📈</span>My Progress</button>
+    </nav>
+    <p class="side-note">✧ Everything is saved in this browser.</p>
+  </aside>
+
+  <main id="main">
+    <!-- HOME -->
+    <section class="view" id="v-home">
+      <header class="hero">
+        <h1>Ready to make studying a little easier?</h1>
+        <p>Your little space to learn, practice, and shine.</p>
+      </header>
+      <div class="grid2">
+        <div class="card big">
+          <h2>Your study sessions</h2>
+          <div class="stat-row">
+            <div><b id="h-quiz">0</b><span>quizzes completed</span></div>
+            <div><b id="h-task">0</b><span>tasks done</span></div>
+            <div><b id="h-card">0</b><span>flashcards made</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Daily study goal</h2>
+          <p class="muted" id="goal-text"></p>
+          <div class="bar" role="progressbar" aria-label="Daily goal" id="goal-bar"><i></i></div>
+        </div>
+      </div>
+      <h2 class="sec">Quick Start</h2>
+      <div class="grid3">
+        <button class="card qs" data-view="cards"><em>🗂️</em><b>Make Flashcards</b><span>Build a deck and flip through it.</span></button>
+        <button class="card qs" data-view="quiz"><em>📝</em><b>Take a Quiz</b><span>Write questions, then test yourself.</span></button>
+        <button class="card qs" data-view="tasks"><em>✅</em><b>My Study Checklist</b><span>Plan what to study next.</span></button>
+      </div>
+      <h2 class="sec">Recent Activity</h2>
+      <div class="card"><ul class="list" id="activity"></ul></div>
+    </section>
+
+    <!-- FLASHCARDS -->
+    <section class="view" id="v-cards" hidden>
+      <h1>Flashcards</h1>
+      <div class="grid2">
+        <form class="card" id="card-form">
+          <h2>Add a flashcard</h2>
+          <label>Subject or topic<input id="c-topic" required maxlength="40" placeholder="e.g. Biology"></label>
+          <label>Question<textarea id="c-q" required rows="2" placeholder="What is the powerhouse of the cell?"></textarea></label>
+          <label>Answer<textarea id="c-a" required rows="2" placeholder="The mitochondria"></textarea></label>
+          <button class="btn" type="submit">Add to deck</button>
+        </form>
+        <div class="card center">
+          <h2>Your deck <span class="pill" id="deck-count"></span></h2>
+          <div id="deck-area"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="view" id="v-quiz" hidden>
+      <h1>Quiz Maker</h1>
+      <div class="grid2">
+        <form class="card" id="quiz-form">
+          <h2>Add a question</h2>
+          <label>Quiz topic<input id="q-topic" required maxlength="40" placeholder="e.g. World Capitals"></label>
+          <label>Question<textarea id="q-q" required rows="2"></textarea></label>
+          <fieldset><legend>Four answers — pick the correct one</legend>
+            <div class="opt"><input type="radio" name="correct" value="0" checked aria-label="Option A is correct"><input required maxlength="80" aria-label="Option A" placeholder="Option A"></div>
+            <div class="opt"><input type="radio" name="correct" value="1" aria-label="Option B is correct"><input required maxlength="80" aria-label="Option B" placeholder="Option B"></div>
+            <div class="opt"><input type="radio" name="correct" value="2" aria-label="Option C is correct"><input required maxlength="80" aria-label="Option C" placeholder="Option C"></div>
+            <div class="opt"><input type="radio" name="correct" value="3" aria-label="Option D is correct"><input required maxlength="80" aria-label="Option D" placeholder="Option D"></div>
+          </fieldset>
+          <button class="btn" type="submit">Add question</button>
+          <p class="muted small">You write the questions and answers yourself — StudySpark doesn't generate them.</p>
+        </form>
+        <div class="card" id="quiz-area"></div>
+      </div>
+    </section>
+
+    <!-- TASKS -->
+    <section class="view" id="v-tasks" hidden>
+      <h1>Study Checklist</h1>
+      <div class="grid2">
+        <form class="card" id="task-form">
+          <h2>Add a task</h2>
+          <label>Task<input id="t-title" required maxlength="80" placeholder="Review chapter 4"></label>
+          <label>Subject<input id="t-subj" maxlength="30" placeholder="Math"></label>
+          <label>Due date (optional)<input id="t-due" type="date"></label>
+          <button class="btn" type="submit">Add task</button>
+        </form>
+        <div class="card">
+          <h2>Your tasks</h2>
+          <p class="muted" id="task-text"></p>
+          <div class="bar" role="progressbar" aria-label="Tasks completed" id="task-bar"><i></i></div>
+          <ul class="list tasks" id="task-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRESS -->
+    <section class="view" id="v-progress" hidden>
+      <h1>My Progress</h1>
+      <div class="grid3" id="p-stats"></div>
+      <div class="grid2">
+        <div class="card"><h2>Quiz scores</h2><div id="p-scores"></div></div>
+        <div class="card"><h2>Summary</h2><div id="p-bars"></div></div>
+      </div>
+      <button class="btn ghost" id="reset-all">Reset all my data</button>
+    </section>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
